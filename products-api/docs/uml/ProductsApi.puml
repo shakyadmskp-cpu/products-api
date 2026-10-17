@@ -1,0 +1,39 @@
+@startuml
+
+class Product {
+  - id : int
+  - name : String
+  - price : double
+  + Product()
+  + Product(id : int, name : String, price : double)
+  + getId() : int
+  + getName() : String
+  + getPrice() : double
+  + setId(id : int) : void
+  + setName(name : String) : void
+  + setPrice(price : double) : void
+}
+
+class ProductService {
+  - products : List<Product>
+  - nextId : Long
+  + getAllProducts() : List<Product>
+  + addProduct(product : Product) : Product
+  + getProductById(id : Long) : Optional<Product>
+  + deleteProduct(id : Long) : void
+  + findByName(name : String) : List<Product>
+}
+
+class ProductController {
+  - productService : ProductService
+  + getAllProducts() : List<Product>
+  + getProductById(id : Long) : Product
+  + addProduct(product : Product) : Product
+  + deleteProduct(id : Long) : void
+  + searchProducts(name : String) : List<Product>
+}
+
+ProductController ..> ProductService
+ProductService --> Product
+
+@enduml
