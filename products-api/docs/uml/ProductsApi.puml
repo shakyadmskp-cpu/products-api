@@ -33,7 +33,30 @@ class ProductController {
   + searchProducts(name : String) : List<Product>
 }
 
+
+class DigitalProduct {
+  - downloadUrl : String
+  - fileSizeMB : double
+  + DigitalProduct()
+  + DigitalProduct(id : int, name : String, price : double, downloadUrl : String, fileSizeMB : double)
+  + getDownloadUrl() : String
+  + getFileSizeMB() : double
+}
+
+class PhysicalProduct {
+  - weightKg : double
+  - dimensions : String
+  + PhysicalProduct()
+  + PhysicalProduct(id : int, name : String, price : double, weightKg : double, dimensions : String)
+  + getWeightKg() : double
+  + getDimensions() : String
+}
+
 ProductController ..> ProductService
 ProductService --> Product
+
+Product <|-- DigitalProduct
+Product <|-- PhysicalProduct
+
 
 @enduml
