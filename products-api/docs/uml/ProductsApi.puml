@@ -1,62 +1,45 @@
-@startuml
+@StarUML
 
-class Product {
-  - id : int
-  - name : String
-  - price : double
-  + Product()
-  + Product(id : int, name : String, price : double)
-  + getId() : int
-  + getName() : String
-  + getPrice() : double
-  + setId(id : int) : void
-  + setName(name : String) : void
-  + setPrice(price : double) : void
+abstract class Product {
+    - id : int
+    - name : String
+    - price : double
+    + getId() : int
+    + getName() : String
+    + getPrice() : double
+    + setId(id : int) : void
+    + setName(name : String) : void
+    + setPrice(price : double) : void
+    {abstract} getSummary() : String
 }
 
-class ProductService {
-  - products : List<Product>
-  - nextId : Long
-  + getAllProducts() : List<Product>
-  + addProduct(product : Product) : Product
-  + getProductById(id : Long) : Optional<Product>
-  + deleteProduct(id : Long) : void
-  + findByName(name : String) : List<Product>
+interface Discountable {
+    + applyDiscount(rate : double) : void
+    + getDiscountedPrice() : double
 }
-
-class ProductController {
-  - productService : ProductService
-  + getAllProducts() : List<Product>
-  + getProductById(id : Long) : Product
-  + addProduct(product : Product) : Product
-  + deleteProduct(id : Long) : void
-  + searchProducts(name : String) : List<Product>
-}
-
 
 class DigitalProduct {
-  - downloadUrl : String
-  - fileSizeMB : double
-  + DigitalProduct()
-  + DigitalProduct(id : int, name : String, price : double, downloadUrl : String, fileSizeMB : double)
-  + getDownloadUrl() : String
-  + getFileSizeMB() : double
+    - downloadUrl : String
+    - fileSizeMB : double
+    - discountedPrice : double
+    + getSummary() : String
+    + applyDiscount(rate : double) : void
+    + getDiscountedPrice() : double
 }
 
 class PhysicalProduct {
-  - weightKg : double
-  - dimensions : String
-  + PhysicalProduct()
-  + PhysicalProduct(id : int, name : String, price : double, weightKg : double, dimensions : String)
-  + getWeightKg() : double
-  + getDimensions() : String
+    - weightKg : double
+    - dimensions : String
+    - discountedPrice : double
+    + getSummary() : String
+    + applyDiscount(rate : double) : void
+    + getDiscountedPrice() : double
 }
-
-ProductController ..> ProductService
-ProductService --> Product
 
 Product <|-- DigitalProduct
 Product <|-- PhysicalProduct
 
+Discountable <|.. DigitalProduct
+Discountable <|.. PhysicalProduct
 
-@enduml
+@pendulum
